@@ -214,7 +214,17 @@ When configuring the project for a **Cadence** tracking pipeline, intermediate n
    git add .schematic-backend .gitignore tools netlists/cadence.json
    ```
 
-> 🚨 **Critical Limitation:** The current integration validation script (`check_capture_export.py`) cannot programmatically guarantee that the generated `.dat` structures correspond to the absolute last saved state of the primary `.dsn` project file. Therefore, before running any `git commit` inside a Cadence setup, **you must explicitly trigger the OrCAD Capture Netlist Export into the `.capture-export` directory** right before creating the commit.
+---
+
+## ⚠️ Pipeline Status & Critical Limitations
+
+### 1. Verification Disclaimer
+> 🛠 **Notice:** The Cadence extended verification pipeline, including netlist log checks, DAT matrix analysis, baseline evaluation, and structural comparisons (`check_cadence_netlist.sh`, `check_capture_export.py`, `parse_capture_netlist.py`, `compare_netlists.py`), has **not been fully tested under all edge cases yet**. Complete, end-to-end integration verification is scheduled for future milestones.
+
+### 2. Manual Export Dependency (Strict Constraint)
+> 🚨 **Critical Limitation:** The current integration validation script (`check_capture_export.py`) **does not programmatically prove or guarantee** that the generated `.dat` structures actually correspond to the absolute last saved state of the primary `.dsn` project file. 
+> 
+> Therefore, before running any `git commit` inside a Cadence setup, **you must explicitly trigger the OrCAD Capture Netlist Export into the `.capture-export` directory** right before creating the commit. Failing to manually refresh the export directory may result in committing a stale netlist database that does not match your modified schematic graph.
 
 ---
 
